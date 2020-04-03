@@ -1,3 +1,5 @@
+![Java CI with Gradle](https://github.com/timakden/bank-account-management/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=develop)
+
 # Bank account management system
 
 Simple bank account management system to practice Kotlin and Spring Boot.
