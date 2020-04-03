@@ -11,7 +11,7 @@ import javax.persistence.*
  */
 @Entity
 @Table(name = "ledger")
-data class Ledger(
+data class LedgerEntry(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,

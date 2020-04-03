@@ -35,5 +35,5 @@ data class Account(
         fetch = FetchType.LAZY,
         orphanRemoval = true
     )
-    val operations: List<Ledger>
+    val ledgerEntries: List<LedgerEntry>
 )
