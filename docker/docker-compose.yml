@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  bank-postgres:
+    ports:
+      - 5432:5432
+    image: postgres
+    restart: on-failure:3
+    environment:
+      POSTGRES_DB: "bank-db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+  bank-app:
+    build: .
+    ports:
+      - 5005:5005
+      - 8080:8080
+    environment:
+      - SPRING.DATASOURCE.URL=jdbc:postgresql://bank-postgres:5432/bank-db
+      - SPRING.LIQUIBASE.URL=jdbc:postgresql://bank-postgres:5432/bank-db
+    depends_on:
+      - bank-postgres

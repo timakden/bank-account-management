@@ -1,1 +1,33 @@
+logging:
+  level:
+    org.springframework.web: ${BANK_LOG_LEVEL:info}
 
+server:
+  port: ${BANK_PORT:8080}
+  servlet:
+    context-path: /api/yard
+
+spring:
+  application:
+    name: bank-app
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    hibernate.ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        show_sql: false
+        format_sql: true
+        jdbc.lob.non_contextual_creation: true
+  datasource:
+    url: ${BANK_DB_URL:jdbc:postgresql://localhost:5432/bank-db}
+    username: ${BANK_DB_USER:postgres}
+    password: ${BANK_DB_PASSWORD:postgres}
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    url: ${BANK_DB_URL:jdbc:postgresql://localhost:5432/bank-db}
+    user: ${BANK_LIQUIBASE_USER:postgres}
+    password: ${BANK_LIQUIBASE_PASSWORD:postgres}
+    changelog: classpath:db/changelog/db-changelog.xml
