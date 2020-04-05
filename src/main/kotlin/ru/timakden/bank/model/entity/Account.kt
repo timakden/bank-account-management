@@ -15,7 +15,7 @@ data class Account(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    @Column(name = "account_number")
+    @Column(name = "account_number", nullable = false)
     val number: String,
 
     @Column(name = "balance")

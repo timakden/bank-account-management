@@ -17,16 +17,16 @@ data class LedgerEntry(
     val id: Long,
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", nullable = false)
     val account: Account,
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     val amount: BigDecimal,
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "operation")
+    @Column(name = "operation", nullable = false)
     val operation: BankOperation,
 
-    @Column(name = "operation_time")
+    @Column(name = "operation_time", nullable = false)
     val operationTime: Instant
 )
