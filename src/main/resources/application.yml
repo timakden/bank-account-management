@@ -5,7 +5,7 @@ logging:
 server:
   port: ${BANK_PORT:8080}
   servlet:
-    context-path: /api/yard
+    context-path: /api/bank
 
 spring:
   application:

@@ -14,13 +14,13 @@ data class Client(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", nullable = false)
     val fullName: String,
 
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", nullable = false)
     val birthDate: LocalDate,
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     val phoneNumber: String,
 
     @OneToMany(
