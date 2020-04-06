@@ -1,6 +1,5 @@
 FROM openjdk:11-jdk-slim
 RUN mkdir -p /data/heap-dumps
-RUN pwd
 COPY ./build/libs/*.jar app.jar
 COPY ./build/resources/main /resources
 CMD ["java", \
