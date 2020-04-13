@@ -12,7 +12,7 @@ import javax.persistence.*
 data class Client(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0,
 
     @Column(name = "full_name", nullable = false)
     val fullName: String,
@@ -29,5 +29,5 @@ data class Client(
         fetch = FetchType.LAZY,
         orphanRemoval = true
     )
-    val accounts: List<Account>
+    val accounts: MutableList<Account> = mutableListOf()
 )
