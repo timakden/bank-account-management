@@ -15,6 +15,7 @@ services:
       - 5005:5005
       - 8080:8080
     environment:
+      - BANK_LOG_LEVEL=debug
       - SPRING.DATASOURCE.URL=jdbc:postgresql://bank-postgres:5432/bank-db
       - SPRING.LIQUIBASE.URL=jdbc:postgresql://bank-postgres:5432/bank-db
     depends_on:

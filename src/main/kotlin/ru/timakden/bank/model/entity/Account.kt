@@ -13,7 +13,7 @@ import javax.persistence.*
 data class Account(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0,
 
     @Column(name = "account_number", nullable = false)
     val number: String,
@@ -35,5 +35,5 @@ data class Account(
         fetch = FetchType.LAZY,
         orphanRemoval = true
     )
-    val ledgerEntries: List<LedgerEntry>
+    val ledgerEntries: MutableList<LedgerEntry> = mutableListOf()
 )

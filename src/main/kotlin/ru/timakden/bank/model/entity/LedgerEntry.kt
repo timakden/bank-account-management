@@ -14,7 +14,7 @@ import javax.persistence.*
 data class LedgerEntry(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0,
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)

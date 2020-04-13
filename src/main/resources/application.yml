@@ -1,6 +1,6 @@
 logging:
   level:
-    org.springframework.web: ${BANK_LOG_LEVEL:info}
+    root: ${BANK_LOG_LEVEL:info}
 
 server:
   port: ${BANK_PORT:8080}
