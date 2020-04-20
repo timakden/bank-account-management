@@ -5,9 +5,9 @@ plugins {
     id("com.github.ben-manes.versions") version "0.28.0"
     id("org.springframework.boot") version "2.2.6.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    kotlin("jvm") version "1.3.71"
-    kotlin("plugin.spring") version "1.3.71"
-    kotlin("plugin.jpa") version "1.3.71"
+    kotlin("jvm") version "1.3.72"
+    kotlin("plugin.spring") version "1.3.72"
+    kotlin("plugin.jpa") version "1.3.72"
 }
 
 group = "ru.timakden"
@@ -45,8 +45,8 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.testcontainers:postgresql:1.13.0")
-    testImplementation("org.testcontainers:junit-jupiter:1.13.0")
+    testImplementation("org.testcontainers:postgresql:1.14.0")
+    testImplementation("org.testcontainers:junit-jupiter:1.14.0")
 }
 
 tasks.withType<Test> {

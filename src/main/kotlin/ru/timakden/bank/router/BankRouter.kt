@@ -8,7 +8,9 @@ import org.springframework.web.reactive.function.server.router
 import ru.timakden.bank.handler.AccountHandler
 import ru.timakden.bank.handler.ClientHandler
 import ru.timakden.bank.handler.LedgerHandler
-import ru.timakden.bank.util.Constants.CONTEXT_PATH
+import ru.timakden.bank.util.Constants.ACCOUNTS_PATH
+import ru.timakden.bank.util.Constants.CLIENTS_PATH
+import ru.timakden.bank.util.Constants.LEDGER_PATH
 
 
 /**
@@ -23,25 +25,25 @@ class BankRouter @Autowired constructor(
 ) {
     @Bean
     fun clientsRoute() = router {
-        (accept(APPLICATION_JSON) and CONTEXT_PATH).nest {
-            GET("/clients", clientHandler::getAll)
-            POST("/clients", clientHandler::create)
+        (accept(APPLICATION_JSON)).nest {
+            GET(CLIENTS_PATH, clientHandler::getAll)
+            POST(CLIENTS_PATH, clientHandler::create)
         }
     }
 
     @Bean
     fun getAllAccountsRoute() = router {
-        (accept(APPLICATION_JSON) and CONTEXT_PATH).nest {
-            GET("/accounts", accountHandler::getAll)
-            POST("/accounts", accountHandler::create)
+        (accept(APPLICATION_JSON)).nest {
+            GET(ACCOUNTS_PATH, accountHandler::getAll)
+            POST(ACCOUNTS_PATH, accountHandler::create)
         }
     }
 
     @Bean
     fun getAllLedgerEntriesRoute() = router {
-        (accept(APPLICATION_JSON) and CONTEXT_PATH).nest {
-            GET("/ledger", ledgerHandler::getAll)
-            POST("/ledger", ledgerHandler::create)
+        (accept(APPLICATION_JSON)).nest {
+            GET(LEDGER_PATH, ledgerHandler::getAll)
+            POST(LEDGER_PATH, ledgerHandler::create)
         }
     }
 }
