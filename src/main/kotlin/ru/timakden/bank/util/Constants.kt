@@ -5,5 +5,8 @@ package ru.timakden.bank.util
  * Created on 05.04.2020.
  */
 object Constants {
-    const val CONTEXT_PATH = "/api/bank"
+    private const val CONTEXT_PATH = "/api/bank"
+    const val CLIENTS_PATH = "$CONTEXT_PATH/clients"
+    const val ACCOUNTS_PATH = "$CONTEXT_PATH/accounts"
+    const val LEDGER_PATH = "$CONTEXT_PATH/ledger"
 }

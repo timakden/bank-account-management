@@ -2,7 +2,8 @@ package ru.timakden.bank.handler
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus.CREATED
+import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.stereotype.Component
@@ -11,10 +12,11 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
+import ru.timakden.bank.exception.ValidationException
 import ru.timakden.bank.model.dto.ClientDTO
 import ru.timakden.bank.model.dto.converter.ClientDTOConverter
 import ru.timakden.bank.model.dto.request.CreateClientRequest
-import ru.timakden.bank.model.entity.Client
 import ru.timakden.bank.repository.ClientRepository
 
 /**
@@ -42,10 +44,20 @@ class ClientHandler @Autowired constructor(private val repository: ClientReposit
 
         return request.bodyToMono(CreateClientRequest::class.java)
             .flatMap {
-                val client = Client(fullName = it.fullName, birthDate = it.birthDate, phoneNumber = it.phoneNumber)
-                Mono.just(repository.save(client))
+                if (it.isValid()) {
+                    Mono.just(repository.save(it.toEntity()))
+                } else {
+                    Mono.error<ValidationException>(ValidationException("Failed to validate request $it"))
+                }
             }
-            .flatMap { ServerResponse.status(CREATED).build() }
-            .switchIfEmpty(ServerResponse.status(INTERNAL_SERVER_ERROR).build())
+            .flatMap { ServerResponse.status(HttpStatus.CREATED).build() }
+            .doOnError {
+                val status = when (it) {
+                    is ValidationException -> BAD_REQUEST
+                    else -> INTERNAL_SERVER_ERROR
+                }
+
+                ServerResponse.status(status).body(it.toMono(), Throwable::class.java)
+            }
     }
 }

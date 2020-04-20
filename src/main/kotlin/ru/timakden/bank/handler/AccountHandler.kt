@@ -2,9 +2,8 @@ package ru.timakden.bank.handler
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Propagation.SUPPORTS
@@ -12,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
+import ru.timakden.bank.exception.ValidationException
 import ru.timakden.bank.model.dto.AccountDTO
 import ru.timakden.bank.model.dto.converter.AccountDTOConverter
 import ru.timakden.bank.model.dto.request.CreateAccountRequest
@@ -19,6 +20,9 @@ import ru.timakden.bank.model.entity.Account
 import ru.timakden.bank.model.enums.Currency
 import ru.timakden.bank.repository.AccountRepository
 import ru.timakden.bank.repository.ClientRepository
+import ru.timakden.bank.util.Constants.ACCOUNTS_PATH
+import ru.timakden.bank.validator.AccountValidator
+import java.net.URI
 
 /**
  * @author Denis Timakov (timakden88@gmail.com)
@@ -28,7 +32,8 @@ import ru.timakden.bank.repository.ClientRepository
 @Transactional
 class AccountHandler @Autowired constructor(
     private val repository: AccountRepository,
-    private val clientRepository: ClientRepository
+    private val clientRepository: ClientRepository,
+    private val accountValidator: AccountValidator
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -47,21 +52,28 @@ class AccountHandler @Autowired constructor(
         logger.debug("Request: $request")
 
         return request.bodyToMono(CreateAccountRequest::class.java)
-            .flatMap { createRequest ->
-                Mono.justOrEmpty(
-                    clientRepository.findByIdOrNull(createRequest.clientId)?.let { client ->
-                        val account = Account(
-                            number = createRequest.accountNumber,
-                            currency = Currency.valueOf(createRequest.currency),
-                            balance = createRequest.balance,
-                            owner = client
-                        )
-
-                        repository.save(account)
-                    }
-                )
+            .flatMap {
+                if (accountValidator.isRequestValid(it)) {
+                    val client = clientRepository.getOne(it.clientId)
+                    val account = Account(
+                        number = it.accountNumber,
+                        balance = it.balance,
+                        currency = Currency.valueOf(it.currency),
+                        owner = client
+                    )
+                    Mono.just(repository.save(account))
+                } else {
+                    Mono.error<ValidationException>(ValidationException("Failed to validate request $it"))
+                }
             }
             .flatMap { ServerResponse.status(CREATED).build() }
-            .switchIfEmpty(ServerResponse.status(INTERNAL_SERVER_ERROR).build())
+            .doOnError {
+                val status = when (it) {
+                    is ValidationException -> HttpStatus.BAD_REQUEST
+                    else -> HttpStatus.INTERNAL_SERVER_ERROR
+                }
+
+                ServerResponse.status(status).body(it.toMono(), Throwable::class.java)
+            }
     }
 }

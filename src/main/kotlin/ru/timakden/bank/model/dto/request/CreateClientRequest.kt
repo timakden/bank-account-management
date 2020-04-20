@@ -1,5 +1,6 @@
 package ru.timakden.bank.model.dto.request
 
+import ru.timakden.bank.model.entity.Client
 import java.time.LocalDate
 
 /**
@@ -10,4 +11,8 @@ data class CreateClientRequest(
     val fullName: String,
     val birthDate: LocalDate,
     val phoneNumber: String
-)
+) {
+    fun toEntity(): Client = Client(fullName = fullName, birthDate = birthDate, phoneNumber = phoneNumber)
+
+    fun isValid(): Boolean = fullName.isNotBlank() && phoneNumber.isNotBlank() && birthDate.isBefore(LocalDate.now())
+}
