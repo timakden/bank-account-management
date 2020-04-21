@@ -74,13 +74,12 @@ class LedgerHandler @Autowired constructor(
                 }
             }
             .flatMap { ServerResponse.status(CREATED).build() }
-            .doOnError {
-                val status = when (it) {
-                    is ValidationException -> HttpStatus.BAD_REQUEST
-                    else -> HttpStatus.INTERNAL_SERVER_ERROR
+            .onErrorResume {
+                when (it) {
+                    is ValidationException -> ServerResponse.badRequest().body(it.message.toMono(), String::class.java)
+                    else -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(it.toMono(), Throwable::class.java)
                 }
-
-                ServerResponse.status(status).body(it.toMono(), Throwable::class.java)
             }
     }
 }

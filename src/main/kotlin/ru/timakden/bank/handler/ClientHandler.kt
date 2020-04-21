@@ -3,7 +3,6 @@ package ru.timakden.bank.handler
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.stereotype.Component
@@ -51,13 +50,11 @@ class ClientHandler @Autowired constructor(private val repository: ClientReposit
                 }
             }
             .flatMap { ServerResponse.status(HttpStatus.CREATED).build() }
-            .doOnError {
-                val status = when (it) {
-                    is ValidationException -> BAD_REQUEST
-                    else -> INTERNAL_SERVER_ERROR
+            .onErrorResume {
+                when (it) {
+                    is ValidationException -> ServerResponse.badRequest().body(it.message.toMono(), String::class.java)
+                    else -> ServerResponse.status(INTERNAL_SERVER_ERROR).body(it.toMono(), Throwable::class.java)
                 }
-
-                ServerResponse.status(status).body(it.toMono(), Throwable::class.java)
             }
     }
 }

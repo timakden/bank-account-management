@@ -20,9 +20,7 @@ import ru.timakden.bank.model.entity.Account
 import ru.timakden.bank.model.enums.Currency
 import ru.timakden.bank.repository.AccountRepository
 import ru.timakden.bank.repository.ClientRepository
-import ru.timakden.bank.util.Constants.ACCOUNTS_PATH
 import ru.timakden.bank.validator.AccountValidator
-import java.net.URI
 
 /**
  * @author Denis Timakov (timakden88@gmail.com)
@@ -67,13 +65,12 @@ class AccountHandler @Autowired constructor(
                 }
             }
             .flatMap { ServerResponse.status(CREATED).build() }
-            .doOnError {
-                val status = when (it) {
-                    is ValidationException -> HttpStatus.BAD_REQUEST
-                    else -> HttpStatus.INTERNAL_SERVER_ERROR
+            .onErrorResume {
+                when (it) {
+                    is ValidationException -> ServerResponse.badRequest().body(it.message.toMono(), String::class.java)
+                    else -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(it.toMono(), Throwable::class.java)
                 }
-
-                ServerResponse.status(status).body(it.toMono(), Throwable::class.java)
             }
     }
 }
