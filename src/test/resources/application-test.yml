@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: debug
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
