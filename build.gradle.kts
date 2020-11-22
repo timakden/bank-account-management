@@ -2,24 +2,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     idea
-    id("com.github.ben-manes.versions") version "0.28.0"
-    id("org.springframework.boot") version "2.2.6.RELEASE"
-    id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
-    kotlin("plugin.jpa") version "1.3.72"
+    id("com.github.ben-manes.versions") version "0.36.0"
+    id("org.springframework.boot") version "2.4.0"
+    id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    kotlin("jvm") version "1.4.20"
+    kotlin("plugin.spring") version "1.4.20"
+    kotlin("plugin.jpa") version "1.4.20"
 }
 
 group = "ru.timakden"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
-
-val developmentOnly: Configuration by configurations.creating
-configurations {
-    runtimeClasspath {
-        extendsFrom(developmentOnly)
-    }
-}
 
 repositories {
     jcenter()
@@ -45,8 +38,8 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.testcontainers:postgresql:1.14.0")
-    testImplementation("org.testcontainers:junit-jupiter:1.14.0")
+    testImplementation("org.testcontainers:postgresql:1.15.0")
+    testImplementation("org.testcontainers:junit-jupiter:1.15.0")
 }
 
 tasks.withType<Test> {
