@@ -53,7 +53,7 @@ class LedgerHandler @Autowired constructor(
         return request.bodyToMono(CreateLedgerEntryRequest::class.java)
             .flatMap {
                 if (ledgerValidator.isRequestValid(it)) {
-                    val account = accountRepository.getOne(it.accountId)
+                    val account = accountRepository.getById(it.accountId)
                     val operation = BankOperation.valueOf(it.operation)
                     val ledgerEntry = LedgerEntry(
                         account = account,

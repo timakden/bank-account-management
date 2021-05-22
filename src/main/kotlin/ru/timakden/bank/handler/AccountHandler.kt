@@ -52,7 +52,7 @@ class AccountHandler @Autowired constructor(
         return request.bodyToMono(CreateAccountRequest::class.java)
             .flatMap {
                 if (accountValidator.isRequestValid(it)) {
-                    val client = clientRepository.getOne(it.clientId)
+                    val client = clientRepository.getById(it.clientId)
                     val account = Account(
                         number = it.accountNumber,
                         balance = it.balance,
