@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     idea
-    id("com.github.ben-manes.versions") version "0.41.0"
-    id("org.springframework.boot") version "2.6.2"
+    id("com.github.ben-manes.versions") version "0.42.0"
+    id("org.springframework.boot") version "2.6.3"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.spring") version "1.6.10"
@@ -20,7 +20,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.2")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.3")
     }
 }
 
@@ -43,8 +43,8 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.testcontainers:postgresql:1.16.2")
-    testImplementation("org.testcontainers:junit-jupiter:1.16.2")
+    testImplementation("org.testcontainers:postgresql:1.16.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.16.3")
 }
 
 tasks {
