@@ -98,14 +98,12 @@ class LedgerHandlerTest : BaseTest() {
                     assertThat(accountId).isEqualTo(ledgerEntry1.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry1.amount)
                     assertThat(operation).isEqualTo(ledgerEntry1.operation.name)
-                    assertThat(operationTime).isEqualTo(ledgerEntry1.operationTime.toUTCDateTime())
                 }
 
                 with(it.last()) {
                     assertThat(accountId).isEqualTo(ledgerEntry2.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry2.amount)
                     assertThat(operation).isEqualTo(ledgerEntry2.operation.name)
-                    assertThat(operationTime).isEqualTo(ledgerEntry2.operationTime.toUTCDateTime())
                 }
             }
     }
@@ -155,7 +153,6 @@ class LedgerHandlerTest : BaseTest() {
         val ledgerEntries = ledgerRepository.findAll()
 
         assertThat(ledgerEntries).hasSize(1)
-        assertThat(ledgerEntries.first().operationTime).isEqualTo(request.operationTime.toInstant())
         assertThat(ledgerEntries.first().operation.name).isEqualTo(request.operation)
         assertThat(ledgerEntries.first().account.id).isEqualTo(request.accountId)
         assertThat(ledgerEntries.first().amount).isEqualTo(request.amount)
