@@ -1,18 +1,23 @@
+import org.gradle.api.JavaVersion.VERSION_17
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     idea
     id("com.github.ben-manes.versions") version "0.42.0"
-    id("org.springframework.boot") version "2.6.4"
+    id("org.springframework.boot") version "2.6.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.spring") version "1.6.10"
-    kotlin("plugin.jpa") version "1.6.10"
+    kotlin("jvm") version "1.6.20"
+    kotlin("plugin.spring") version "1.6.20"
+    kotlin("plugin.jpa") version "1.6.20"
 }
 
 group = "ru.timakden"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+
+java {
+    sourceCompatibility = VERSION_17
+    targetCompatibility = VERSION_17
+}
 
 repositories {
     mavenCentral()
@@ -20,7 +25,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.4")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.6")
     }
 }
 
