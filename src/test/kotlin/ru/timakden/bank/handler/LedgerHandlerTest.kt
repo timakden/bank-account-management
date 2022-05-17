@@ -103,7 +103,7 @@ class LedgerHandlerTest : BaseTest() {
                     assertThat(accountId).isEqualTo(ledgerEntry1.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry1.amount)
                     assertThat(operation).isEqualTo(ledgerEntry1.operation.name)
-                    assertThat(operationTime).isEqualTo(ledgerEntry1.operationTime.toUTCDateTime())
+                    assertThat(operationTime).isEqualToIgnoringNanos(ledgerEntry1.operationTime.toUTCDateTime())
                 }
 
                 with(it.last()) {
