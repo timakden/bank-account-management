@@ -1,4 +1,3 @@
-import org.gradle.api.JavaVersion.VERSION_17
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -56,7 +55,6 @@ kotlin {
 tasks {
     withType<Test> {
         useJUnitPlatform()
-        testLogging.showStandardStreams = true
     }
 
     withType<KotlinCompile> {

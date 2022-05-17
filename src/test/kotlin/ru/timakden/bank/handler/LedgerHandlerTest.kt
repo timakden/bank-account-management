@@ -110,6 +110,7 @@ class LedgerHandlerTest : BaseTest() {
                     assertThat(accountId).isEqualTo(ledgerEntry2.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry2.amount)
                     assertThat(operation).isEqualTo(ledgerEntry2.operation.name)
+                    assertThat(operationTime).isEqualToIgnoringNanos(ledgerEntry2.operationTime.toUTCDateTime())
                 }
             }
     }
@@ -159,6 +160,7 @@ class LedgerHandlerTest : BaseTest() {
         val ledgerEntries = ledgerRepository.findAll()
 
         assertThat(ledgerEntries).hasSize(1)
+        assertThat(ledgerEntries.first().operationTime.toUTCDateTime()).isEqualToIgnoringNanos(request.operationTime)
         assertThat(ledgerEntries.first().operation.name).isEqualTo(request.operation)
         assertThat(ledgerEntries.first().account.id).isEqualTo(request.accountId)
         assertThat(ledgerEntries.first().amount).isEqualTo(request.amount)
