@@ -2,8 +2,8 @@ package ru.timakden.bank.handler
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -45,6 +45,8 @@ class LedgerHandlerTest : BaseTest() {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
+
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     @AfterEach
     fun cleanUp() {
@@ -96,9 +98,12 @@ class LedgerHandlerTest : BaseTest() {
             .hasSize(2)
             .value<WebTestClient.ListBodySpec<LedgerEntryDTO>> {
                 with(it.first()) {
+                    logger.info("operationTime = {}", operationTime)
+                    logger.info("ledgerEntry1.operationTime = {}", ledgerEntry1.operationTime.toUTCDateTime())
                     assertThat(accountId).isEqualTo(ledgerEntry1.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry1.amount)
                     assertThat(operation).isEqualTo(ledgerEntry1.operation.name)
+                    assertThat(operationTime).isEqualTo(ledgerEntry1.operationTime.toUTCDateTime())
                 }
 
                 with(it.last()) {
@@ -173,12 +178,5 @@ class LedgerHandlerTest : BaseTest() {
             .body(request.toMono(), CreateLedgerEntryRequest::class.java)
             .exchange()
             .expectStatus().isBadRequest
-    }
-
-    @Test
-    fun `compares two Instants`() {
-        val instant1 = Instant.parse("2007-12-03T10:15:30.00Z").toUTCDateTime()
-        val instant2 = Instant.parse("2007-12-03T10:15:30.00Z").toUTCDateTime()
-        assertThat(instant1).isEqualTo(instant2)
     }
 }
