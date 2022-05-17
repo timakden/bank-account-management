@@ -2,6 +2,7 @@ package ru.timakden.bank.handler
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
@@ -176,8 +177,8 @@ class LedgerHandlerTest : BaseTest() {
 
     @Test
     fun `compares two Instants`() {
-        val instant1 = Instant.parse("2007-12-03T10:15:30.00Z")
-        val instant2 = Instant.parse("2007-12-03T10:15:30.00Z")
+        val instant1 = Instant.parse("2007-12-03T10:15:30.00Z").toUTCDateTime()
+        val instant2 = Instant.parse("2007-12-03T10:15:30.00Z").toUTCDateTime()
         assertThat(instant1).isEqualTo(instant2)
     }
 }
