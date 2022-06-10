@@ -3,11 +3,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     idea
     id("com.github.ben-manes.versions") version "0.42.0"
-    id("org.springframework.boot") version "2.6.7"
+    id("org.springframework.boot") version "2.7.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    kotlin("plugin.jpa") version "1.6.21"
+    kotlin("jvm") version "1.7.0"
+    kotlin("plugin.spring") version "1.7.0"
+    kotlin("plugin.jpa") version "1.7.0"
 }
 
 group = "ru.timakden"
@@ -19,7 +19,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.7")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.7.0")
     }
 }
 
@@ -42,13 +42,13 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.testcontainers:postgresql:1.17.1")
-    testImplementation("org.testcontainers:junit-jupiter:1.17.1")
+    testImplementation("org.testcontainers:postgresql:1.17.2")
+    testImplementation("org.testcontainers:junit-jupiter:1.17.2")
 }
 
 kotlin {
     jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(17))
+        this.languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
