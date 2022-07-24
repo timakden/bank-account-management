@@ -2,7 +2,7 @@ version: "3.7"
 services:
   bank-postgres:
     ports:
-      - 5432:5432
+      - "5432:5432"
     image: postgres
     restart: on-failure:3
     environment:
@@ -12,8 +12,8 @@ services:
   bank-app:
     build: .
     ports:
-      - 5005:5005
-      - 8080:8080
+      - "5005:5005"
+      - "8080:8080"
     environment:
       - BANK_LOG_LEVEL=debug
       - SPRING.DATASOURCE.URL=jdbc:postgresql://bank-postgres:5432/bank-db

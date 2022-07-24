@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:17-jdk-slim
 RUN mkdir -p /data/heap-dumps
 COPY ./build/libs/*.jar app.jar
 COPY ./build/resources/main /resources
