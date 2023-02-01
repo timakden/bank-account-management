@@ -1,7 +1,7 @@
 package ru.timakden.bank.model.entity
 
+import jakarta.persistence.*
 import java.time.LocalDate
-import javax.persistence.*
 
 /**
  * @author Denis Timakov (timakden88@gmail.com)

@@ -1,9 +1,9 @@
 package ru.timakden.bank.model.entity
 
+import jakarta.persistence.*
 import ru.timakden.bank.model.enums.BankOperation
 import java.math.BigDecimal
 import java.time.Instant
-import javax.persistence.*
 
 /**
  * @author Denis Timakov (timakden88@gmail.com)
