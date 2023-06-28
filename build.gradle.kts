@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     idea
-    id("com.github.ben-manes.versions") version "0.46.0"
-    id("org.springframework.boot") version "3.0.6"
+    id("com.github.ben-manes.versions") version "0.47.0"
+    id("org.springframework.boot") version "3.1.1"
     id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.8.21"
-    kotlin("plugin.spring") version "1.8.21"
-    kotlin("plugin.jpa") version "1.8.21"
+    kotlin("jvm") version "1.8.22"
+    kotlin("plugin.spring") version "1.8.22"
+    kotlin("plugin.jpa") version "1.8.22"
 }
 
 group = "ru.timakden"
@@ -19,7 +19,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.6")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.1.1")
     }
 }
 
@@ -42,19 +42,19 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.testcontainers:postgresql:1.18.0")
-    testImplementation("org.testcontainers:junit-jupiter:1.18.0")
+    testImplementation("org.testcontainers:postgresql:1.18.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 }
 
 kotlin {
-    jvmToolchain(19)
+    jvmToolchain(17)
 }
 
 tasks {
     compileKotlin {
         compilerOptions {
             freeCompilerArgs.add("-Xjsr305=strict")
-            jvmTarget.set(JvmTarget.JVM_19)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
     test {
