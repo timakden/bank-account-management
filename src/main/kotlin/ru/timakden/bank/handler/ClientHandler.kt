@@ -1,6 +1,6 @@
 package ru.timakden.bank.handler
 
-import org.slf4j.LoggerFactory
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
@@ -18,6 +18,8 @@ import ru.timakden.bank.model.dto.converter.ClientDTOConverter
 import ru.timakden.bank.model.dto.request.CreateClientRequest
 import ru.timakden.bank.repository.ClientRepository
 
+private val logger = KotlinLogging.logger {}
+
 /**
  * @author Denis Timakov (timakden88@gmail.com)
  * Created on 06.04.2020.
@@ -25,12 +27,10 @@ import ru.timakden.bank.repository.ClientRepository
 @Component
 @Transactional
 class ClientHandler @Autowired constructor(private val repository: ClientRepository) {
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     @Transactional(propagation = SUPPORTS, readOnly = true)
     fun getAll(request: ServerRequest): Mono<ServerResponse> {
-        logger.info("Getting all clients from DB")
-        logger.debug("Request: $request")
+        logger.info { "Getting all clients from DB" }
+        logger.debug { "Request: $request" }
 
         return ServerResponse.ok()
             .contentType(APPLICATION_JSON)
@@ -38,8 +38,8 @@ class ClientHandler @Autowired constructor(private val repository: ClientReposit
     }
 
     fun create(request: ServerRequest): Mono<ServerResponse> {
-        logger.info("Creating a client")
-        logger.debug("Request: $request")
+        logger.info { "Creating a client" }
+        logger.debug { "Request: $request" }
 
         return request.bodyToMono(CreateClientRequest::class.java)
             .flatMap {

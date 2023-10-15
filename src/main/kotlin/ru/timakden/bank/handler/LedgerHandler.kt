@@ -1,6 +1,6 @@
 package ru.timakden.bank.handler
 
-import org.slf4j.LoggerFactory
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.CREATED
@@ -23,6 +23,8 @@ import ru.timakden.bank.repository.AccountRepository
 import ru.timakden.bank.repository.LedgerRepository
 import ru.timakden.bank.validator.LedgerValidator
 
+private val logger = KotlinLogging.logger {}
+
 /**
  * @author Denis Timakov (timakden88@gmail.com)
  * Created on 06.04.2020.
@@ -34,12 +36,10 @@ class LedgerHandler @Autowired constructor(
     private val accountRepository: AccountRepository,
     private val ledgerValidator: LedgerValidator
 ) {
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     @Transactional(propagation = SUPPORTS, readOnly = true)
     fun getAll(request: ServerRequest): Mono<ServerResponse> {
-        logger.info("Getting all ledger entries from DB")
-        logger.debug("Request: $request")
+        logger.info { "Getting all ledger entries from DB" }
+        logger.debug { "Request: $request" }
 
         return ServerResponse.ok()
             .contentType(MediaType.APPLICATION_JSON)
@@ -47,8 +47,8 @@ class LedgerHandler @Autowired constructor(
     }
 
     fun create(request: ServerRequest): Mono<ServerResponse> {
-        logger.info("Creating a ledger entry")
-        logger.debug("Request: $request")
+        logger.info { "Creating a ledger entry" }
+        logger.debug { "Request: $request" }
 
         return request.bodyToMono(CreateLedgerEntryRequest::class.java)
             .flatMap {

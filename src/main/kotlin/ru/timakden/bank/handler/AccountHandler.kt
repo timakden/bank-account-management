@@ -1,6 +1,6 @@
 package ru.timakden.bank.handler
 
-import org.slf4j.LoggerFactory
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.CREATED
@@ -22,6 +22,8 @@ import ru.timakden.bank.repository.AccountRepository
 import ru.timakden.bank.repository.ClientRepository
 import ru.timakden.bank.validator.AccountValidator
 
+private val logger = KotlinLogging.logger {}
+
 /**
  * @author Denis Timakov (timakden88@gmail.com)
  * Created on 06.04.2020.
@@ -33,12 +35,10 @@ class AccountHandler @Autowired constructor(
     private val clientRepository: ClientRepository,
     private val accountValidator: AccountValidator
 ) {
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     @Transactional(propagation = SUPPORTS, readOnly = true)
     fun getAll(request: ServerRequest): Mono<ServerResponse> {
-        logger.info("Getting all accounts from DB")
-        logger.debug("Request: $request")
+        logger.info { "Getting all accounts from DB" }
+        logger.debug { "Request: $request" }
 
         return ServerResponse.ok()
             .contentType(MediaType.APPLICATION_JSON)
@@ -46,8 +46,8 @@ class AccountHandler @Autowired constructor(
     }
 
     fun create(request: ServerRequest): Mono<ServerResponse> {
-        logger.info("Creating an account")
-        logger.debug("Request: $request")
+        logger.info { "Creating an account" }
+        logger.debug { "Request: $request" }
 
         return request.bodyToMono(CreateAccountRequest::class.java)
             .flatMap {

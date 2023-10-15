@@ -1,9 +1,9 @@
 package ru.timakden.bank.handler
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -28,6 +28,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.Month
 
+private val logger = KotlinLogging.logger {}
+
 /**
  * @author Denis Timakov (timakden88@gmail.com)
  * Created on 21.04.2020.
@@ -45,8 +47,6 @@ class LedgerHandlerTest : BaseTest() {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
-
-    private val logger = LoggerFactory.getLogger(javaClass)
 
     @AfterEach
     fun cleanUp() {
@@ -98,8 +98,8 @@ class LedgerHandlerTest : BaseTest() {
             .hasSize(2)
             .value<WebTestClient.ListBodySpec<LedgerEntryDTO>> {
                 with(it.first()) {
-                    logger.info("operationTime = {}", operationTime)
-                    logger.info("ledgerEntry1.operationTime = {}", ledgerEntry1.operationTime.toUTCDateTime())
+                    logger.info { "operationTime = $operationTime" }
+                    logger.info { "ledgerEntry1.operationTime = ${ledgerEntry1.operationTime.toUTCDateTime()}" }
                     assertThat(accountId).isEqualTo(ledgerEntry1.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry1.amount)
                     assertThat(operation).isEqualTo(ledgerEntry1.operation.name)
