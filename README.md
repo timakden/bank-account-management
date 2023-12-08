@@ -4,9 +4,9 @@
 
 Simple bank account management system to practice Kotlin and Spring Boot.
 
-## Technological stack
+## Tech stack
 
-* [JDK 17](https://www.oracle.com/java/technologies/javase/17-relnote-issues.html)
+* [JDK 21](https://openjdk.org/projects/jdk/21/)
 * [Kotlin](https://kotlinlang.org/)
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Reactor](https://projectreactor.io/)

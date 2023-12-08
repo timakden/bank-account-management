@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:21-jdk-alpine
 RUN mkdir -p /data/heap-dumps
 COPY ./build/libs/*.jar app.jar
 COPY ./build/resources/main /resources
