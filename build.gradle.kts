@@ -1,13 +1,13 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 
 plugins {
     idea
     id("com.github.ben-manes.versions") version "0.51.0"
-    id("org.springframework.boot") version "3.2.2"
+    id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.spring") version "1.9.22"
-    kotlin("plugin.jpa") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
+    kotlin("plugin.jpa") version "1.9.23"
 }
 
 group = "ru.timakden"
@@ -19,8 +19,8 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:3.2.2")
-        mavenBom("org.testcontainers:testcontainers-bom:1.19.4")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.2.3")
+        mavenBom("org.testcontainers:testcontainers-bom:1.19.7")
     }
 }
 
@@ -56,11 +56,14 @@ tasks {
     compileKotlin {
         compilerOptions {
             freeCompilerArgs.add("-Xjsr305=strict")
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JVM_21)
         }
     }
     test {
         useJUnitPlatform()
+    }
+    wrapper {
+        gradleVersion = "8.6"
     }
 }
 
