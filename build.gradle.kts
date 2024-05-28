@@ -19,7 +19,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:3.2.5")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.0")
         mavenBom("org.testcontainers:testcontainers-bom:1.19.8")
     }
 }
