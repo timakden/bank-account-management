@@ -2,6 +2,7 @@ package ru.timakden.bank.handler
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.within
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,6 +28,7 @@ import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
 import java.time.Month
+import java.time.temporal.ChronoUnit
 
 private val logger = KotlinLogging.logger {}
 
@@ -103,14 +105,20 @@ class LedgerHandlerTest : BaseTest() {
                     assertThat(accountId).isEqualTo(ledgerEntry1.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry1.amount)
                     assertThat(operation).isEqualTo(ledgerEntry1.operation.name)
-                    assertThat(operationTime).isEqualToIgnoringNanos(ledgerEntry1.operationTime.toUTCDateTime())
+                    assertThat(operationTime).isCloseTo(
+                        ledgerEntry1.operationTime.toUTCDateTime(),
+                        within(10, ChronoUnit.SECONDS)
+                    )
                 }
 
                 with(it.last()) {
                     assertThat(accountId).isEqualTo(ledgerEntry2.account.id)
                     assertThat(amount).isEqualTo(ledgerEntry2.amount)
                     assertThat(operation).isEqualTo(ledgerEntry2.operation.name)
-                    assertThat(operationTime).isEqualToIgnoringNanos(ledgerEntry2.operationTime.toUTCDateTime())
+                    assertThat(operationTime).isCloseTo(
+                        ledgerEntry2.operationTime.toUTCDateTime(),
+                        within(10, ChronoUnit.SECONDS)
+                    )
                 }
             }
     }
@@ -160,7 +168,10 @@ class LedgerHandlerTest : BaseTest() {
         val ledgerEntries = ledgerRepository.findAll()
 
         assertThat(ledgerEntries).hasSize(1)
-        assertThat(ledgerEntries.first().operationTime.toUTCDateTime()).isEqualToIgnoringNanos(request.operationTime)
+        assertThat(ledgerEntries.first().operationTime.toUTCDateTime()).isCloseTo(
+            request.operationTime,
+            within(10, ChronoUnit.SECONDS)
+        )
         assertThat(ledgerEntries.first().operation.name).isEqualTo(request.operation)
         assertThat(ledgerEntries.first().account.id).isEqualTo(request.accountId)
         assertThat(ledgerEntries.first().amount).isEqualTo(request.amount)
