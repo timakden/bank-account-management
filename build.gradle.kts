@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 plugins {
     idea
     id("com.github.ben-manes.versions") version "0.51.0"
-    id("org.springframework.boot") version "3.3.5"
+    id("org.springframework.boot") version "3.4.0"
     id("io.spring.dependency-management") version "1.1.6"
     kotlin("jvm") version "2.0.21"
     kotlin("plugin.spring") version "2.0.21"
@@ -19,8 +19,8 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.5")
-        mavenBom("org.testcontainers:testcontainers-bom:1.20.3")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.4.0")
+        mavenBom("org.testcontainers:testcontainers-bom:1.20.4")
     }
 }
 
@@ -63,7 +63,7 @@ tasks {
         useJUnitPlatform()
     }
     wrapper {
-        gradleVersion = "8.11"
+        gradleVersion = "8.11.1"
     }
 }
 
