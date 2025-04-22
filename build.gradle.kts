@@ -30,7 +30,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("io.github.oshai:kotlin-logging-jvm:7.0.6")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.7")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
