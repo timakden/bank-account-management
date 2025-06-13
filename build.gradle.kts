@@ -20,7 +20,7 @@ repositories {
 dependencyManagement {
     imports {
         mavenBom("org.springframework.boot:spring-boot-dependencies:3.5.0")
-        mavenBom("org.testcontainers:testcontainers-bom:1.21.0")
+        mavenBom("org.testcontainers:testcontainers-bom:1.21.1")
     }
 }
 
@@ -63,7 +63,7 @@ tasks {
         useJUnitPlatform()
     }
     wrapper {
-        gradleVersion = "8.14.1"
+        gradleVersion = "8.14.2"
     }
 }
 
