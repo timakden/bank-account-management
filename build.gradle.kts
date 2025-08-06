@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 plugins {
     idea
     id("com.github.ben-manes.versions") version "0.52.0"
-    id("org.springframework.boot") version "3.5.3"
+    id("org.springframework.boot") version "3.5.4"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("jvm") version "2.2.0"
     kotlin("plugin.spring") version "2.2.0"
@@ -19,7 +19,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:3.5.3")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.5.4")
         mavenBom("org.testcontainers:testcontainers-bom:1.21.3")
     }
 }
@@ -30,7 +30,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("io.github.oshai:kotlin-logging-jvm:7.0.11")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.12")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
